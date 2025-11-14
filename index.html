@@ -1,3 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портфолио дизайнера интерфейсов</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Шапка -->
+  <header class="header">
+    <div class="wrap">
+      <div class="logo">Имя Фамилия</div>
+      <nav class="nav">
+        <a href="#about">Обо мне</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Дизайнер интерфейсов</h1>
+      <p>Создаю стильные, понятные и современные интерфейсы для веба и мобильных приложений.</p>
+    </div>
+  </section>
+
+  <!-- О себе -->
+  <section id="about" class="about">
+    <div class="wrap">
+      <h2>Обо мне</h2>
+      <p>
+        Я начинающий дизайнер интерфейсов. Делаю дизайн сайтов, мобильных приложений,
+        графику и показываю решения через UI/UX.
+      </p>
+    </div>
+  </section>
+
+  <!-- Портфолио -->
+  <section id="portfolio" class="portfolio">
+    <div class="wrap">
+      <h2>Портфолио</h2>
+
+      <!-- Фильтры -->
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="web">Веб</button>
+        <button class="filter-btn" data-filter="app">Приложения</button>
+        <button class="filter-btn" data-filter="brand">Айдентика</button>
+      </div>
+
+      <!-- Сетка проектов -->
+      <div class="grid">
+
+        <div class="card" data-type="web">
+          <img src="img/project1.jpg" alt="Проект сайта 1">
+          <h3>Лендинг</h3>
+        </div>
+
+        <div class="card" data-type="app">
+          <img src="img/project2.jpg" alt="Моб. приложение">
+          <h3>Приложение</h3>
+        </div>
+
+        <div class="card" data-type="brand">
+          <img src="img/project3.jpg" alt="Айдентика">
+          <h3>Логотип</h3>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Контакты -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Связаться со мной</h2>
+
+      <form onsubmit="handleSubmit(event)">
+        <label>Имя</label>
+        <input type="text" required>
+
+        <label>Email</label>
+        <input type="email" required>
+
+        <label>Сообщение</label>
+        <textarea required></textarea>
+
+        <button type="submit">Отправить</button>
+        <div id="status"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Лайтбокс -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <img id="lightboxImage" src="" alt="">
+  </div>
+
+  <!-- Футер -->
+  <footer>
+    <div class="wrap">© <span id="year"></span> Имя Фамилия — Дизайнер интерфейсов</div>
+  </footer>
+
+  <!-- Скрипты -->
+  <script>
+    // Год в футере
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Фильтрация проектов
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.grid .card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.type === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Lightbox — увеличение картинки
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImage');
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => openLightbox(card));
 card.addEventListener('keydown', e => { if (e.key === 'Enter') openLightbox(card); });
     });
     function openLightbox(card) {
